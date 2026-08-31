@@ -64,9 +64,28 @@ Dann `http://localhost:PORT/index.html` (Landingpage) bzw.
 
 ## 3. Deployment
 
-Da es sich um eine statische Seite handelt, funktioniert jeder Static-Hosting-Anbieter, z. B.
-**Vercel**, **Netlify** oder **GitHub Pages** — einfach das ganze Repo deployen. `app/config.js`
-mit den echten Supabase-Werten muss vor dem Go-Live ausgefüllt sein.
+Es handelt sich um eine rein statische Seite — jeder Static-Hosting-Anbieter funktioniert.
+
+### GitHub Pages (vorbereitet)
+
+Der Workflow [`.github/workflows/pages.yml`](.github/workflows/pages.yml) ist bereits eingerichtet
+und deployt bei jedem Push auf `main` automatisch. **Einmalig muss GitHub Pages aber noch von Hand
+freigeschaltet werden** (ein Automatismus dafür scheitert an fehlenden Rechten des GitHub-App-Tokens:
+`Create Pages site failed – Resource not accessible by integration`):
+
+1. Repo → **Settings** → **Pages**
+2. Unter *Build and deployment* → **Source: GitHub Actions** auswählen
+3. Danach unter **Actions** den Workflow „Deploy to GitHub Pages" einmal per *Run workflow* starten
+   (oder einfach den nächsten Commit pushen)
+
+Die Seite liegt anschließend unter `https://huk-bem.github.io/-cosoft/`.
+
+### Vercel / Netlify
+
+Alternativ auf [vercel.com](https://vercel.com) → *Add New… → Project* → Repository `huk-bem/-cosoft`
+importieren. Framework-Preset: *Other*, kein Build-Command, Output-Verzeichnis: Projektwurzel.
+
+> `app/config.js` muss vor dem Go-Live mit den echten Supabase-Werten ausgefüllt sein.
 
 ## 4. Funktionsüberblick
 
