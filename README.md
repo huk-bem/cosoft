@@ -78,11 +78,11 @@ freigeschaltet werden** (ein Automatismus dafür scheitert an fehlenden Rechten 
 3. Danach unter **Actions** den Workflow „Deploy to GitHub Pages" einmal per *Run workflow* starten
    (oder einfach den nächsten Commit pushen)
 
-Die Seite liegt anschließend unter `https://huk-bem.github.io/-cosoft/`.
+Die Seite liegt anschließend unter `https://huk-bem.github.io/cosoft/`.
 
 ### Vercel / Netlify
 
-Alternativ auf [vercel.com](https://vercel.com) → *Add New… → Project* → Repository `huk-bem/-cosoft`
+Alternativ auf [vercel.com](https://vercel.com) → *Add New… → Project* → Repository `huk-bem/cosoft`
 importieren. Framework-Preset: *Other*, kein Build-Command, Output-Verzeichnis: Projektwurzel.
 
 > `app/config.js` muss vor dem Go-Live mit den echten Supabase-Werten ausgefüllt sein.
