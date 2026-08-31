@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>CoSoft – Projektplanung, Terminplanung &amp; Kanban pro Kunde</title>
+<meta name="description" content="CoSoft: geschützte Multiuser-Software für Software- &amp; App-Entwicklung – Projektplanung, intelligent verknüpfte Terminplanung und Kanban-Board, für jeden Kunden ein eigener Bereich." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --brand: #6d5efc;
+    --brand-dark: #5646e0;
+    --brand-light: #eeecff;
+    --ink: #1b1730;
+    --ink-soft: #605c78;
+    --border: #e6e3f5;
+    --bg: #f8f7fd;
+    --surface: #ffffff;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; font-family: 'Inter', system-ui, sans-serif; color: var(--ink); background: var(--bg); line-height: 1.5; }
+  a { color: inherit; }
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+  .btn { display: inline-flex; align-items: center; gap: 8px; border-radius: 10px; padding: 12px 22px; font-weight: 700; font-size: 14.5px; text-decoration: none; border: 1px solid transparent; }
+  .btn-primary { background: var(--brand); color: #fff; box-shadow: 0 10px 24px -10px rgba(109,94,252,.6); }
+  .btn-primary:hover { background: var(--brand-dark); }
+  .btn-ghost { color: var(--ink); border-color: var(--border); background: #fff; }
+  .btn-ghost:hover { background: var(--brand-light); }
+
+  header { position: sticky; top: 0; background: rgba(248,247,253,0.85); backdrop-filter: blur(8px); border-bottom: 1px solid var(--border); z-index: 20; }
+  nav.wrap { display: flex; align-items: center; justify-content: space-between; height: 68px; }
+  .logo { display: flex; align-items: center; gap: 9px; font-weight: 900; font-size: 19px; }
+  .logo .dot { width: 12px; height: 12px; border-radius: 4px; background: var(--brand); }
+  .nav-links { display: flex; gap: 26px; font-size: 14px; font-weight: 600; color: var(--ink-soft); }
+  .nav-actions { display: flex; gap: 10px; }
+  @media (max-width: 720px) { .nav-links { display: none; } }
+
+  .eyebrow { display:inline-flex; align-items:center; gap:8px; background: var(--brand-light); color: var(--brand-dark); font-weight: 700; font-size: 12.5px; padding: 6px 14px; border-radius: 30px; letter-spacing:.02em; }
+  .hero { padding: 84px 0 60px; text-align: center; }
+  .hero h1 { font-size: clamp(32px, 5vw, 54px); font-weight: 900; letter-spacing: -0.02em; margin: 22px 0 18px; }
+  .hero h1 .accent { color: var(--brand); }
+  .hero p.sub { max-width: 620px; margin: 0 auto 34px; color: var(--ink-soft); font-size: 17.5px; }
+  .hero-ctas { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+  .mock { max-width: 920px; margin: 56px auto 0; background: var(--surface); border: 1px solid var(--border); border-radius: 20px; box-shadow: 0 40px 80px -40px rgba(35,25,90,.25); overflow: hidden; }
+  .mock-bar { display:flex; gap:6px; padding: 14px 18px; border-bottom: 1px solid var(--border); }
+  .mock-bar span { width: 10px; height: 10px; border-radius: 50%; background: #e2dff5; }
+  .mock-body { display: grid; grid-template-columns: 170px 1fr; min-height: 320px; }
+  .mock-side { background: #17122b; padding: 18px 12px; display:flex; flex-direction:column; gap:6px; }
+  .mock-side .chip { color: #d8d2f5; font-size: 12px; padding: 8px 10px; border-radius: 7px; display:flex; align-items:center; gap:8px; }
+  .mock-side .chip.active { background: var(--brand); color:#fff; font-weight:700; }
+  .mock-side .chip i { width:7px; height:7px; border-radius:50%; background:#8b7ff5; flex-shrink:0; }
+  .mock-main { padding: 18px; text-align: left; }
+  .mock-cols { display:grid; grid-template-columns: repeat(3,1fr); gap:12px; }
+  .mock-col { background: var(--bg); border:1px solid var(--border); border-radius:10px; padding:9px; }
+  .mock-col h4 { margin:2px 4px 8px; font-size:11.5px; color: var(--ink-soft); text-transform:uppercase; letter-spacing:.04em; }
+  .mock-card { background:#fff; border:1px solid var(--border); border-radius:8px; padding:8px 9px; font-size:12.5px; font-weight:600; margin-bottom:7px; box-shadow:0 1px 2px rgba(20,10,60,.05); }
+  .mock-card small { display:block; font-weight:500; color: var(--brand-dark); margin-top:4px; font-size: 11px; }
+
+  section.features { padding: 90px 0; }
+  .section-head { text-align:center; max-width: 620px; margin: 0 auto 50px; }
+  .section-head h2 { font-size: clamp(26px,3.4vw,36px); margin: 12px 0 10px; letter-spacing:-.01em; }
+  .section-head p { color: var(--ink-soft); font-size: 16px; }
+
+  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  @media (max-width: 860px) { .grid { grid-template-columns: repeat(2,1fr); } }
+  @media (max-width: 560px) { .grid { grid-template-columns: 1fr; } }
+  .feature-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 26px; }
+  .feature-card .icon { width: 44px; height: 44px; border-radius: 11px; background: var(--brand-light); display:flex; align-items:center; justify-content:center; font-size: 21px; margin-bottom: 16px; }
+  .feature-card h3 { margin: 0 0 8px; font-size: 16.5px; }
+  .feature-card p { margin: 0; color: var(--ink-soft); font-size: 14.5px; }
+
+  section.steps { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 90px 0; }
+  .steps-grid { display:grid; grid-template-columns: repeat(3,1fr); gap: 28px; counter-reset: step; }
+  @media (max-width: 760px) { .steps-grid { grid-template-columns: 1fr; } }
+  .step { position: relative; padding-left: 6px; }
+  .step .num { display:inline-flex; align-items:center; justify-content:center; width: 34px; height:34px; border-radius:10px; background: var(--brand); color:#fff; font-weight:800; margin-bottom: 14px; }
+  .step h3 { margin: 0 0 8px; font-size: 16px; }
+  .step p { color: var(--ink-soft); font-size: 14.5px; margin: 0; }
+
+  section.cta { padding: 90px 0; text-align: center; }
+  .cta-box { background: linear-gradient(135deg, var(--brand), var(--brand-dark)); border-radius: 24px; padding: 64px 30px; color: #fff; }
+  .cta-box h2 { font-size: clamp(24px,3.2vw,32px); margin: 0 0 14px; }
+  .cta-box p { color: #e6e2ff; margin: 0 0 26px; }
+  .cta-box .btn-primary { background:#fff; color: var(--brand-dark); box-shadow:none; }
+  .cta-box .btn-primary:hover { background:#f1efff; }
+
+  footer { border-top: 1px solid var(--border); padding: 50px 0 30px; background: var(--surface); }
+  .footer-top { display:flex; justify-content: space-between; flex-wrap: wrap; gap: 30px; margin-bottom: 30px; }
+  .footer-brand p { color: var(--ink-soft); font-size: 13.5px; max-width: 280px; margin: 10px 0 0; }
+  .footer-cols { display:flex; gap: 60px; flex-wrap: wrap; }
+  .footer-col h4 { font-size: 12.5px; text-transform: uppercase; letter-spacing: .05em; color: var(--ink-soft); margin: 0 0 12px; }
+  .footer-col a { display:block; font-size: 14px; margin-bottom: 9px; color: var(--ink); text-decoration:none; }
+  .footer-col a:hover { color: var(--brand); }
+  .footer-bottom { display:flex; justify-content: space-between; align-items:center; flex-wrap:wrap; gap: 10px; padding-top: 24px; border-top: 1px solid var(--border); font-size: 13px; color: var(--ink-soft); }
+  .badge-branch { display:inline-flex; align-items:center; gap:6px; background: var(--brand-light); color: var(--brand-dark); padding: 4px 10px; border-radius: 20px; font-weight:700; font-size: 12px; }
+</style>
+</head>
+<body>
+
+<header>
+  <nav class="wrap">
+    <div class="logo"><span class="dot"></span> CoSoft</div>
+    <div class="nav-links">
+      <a href="#funktionen">Funktionen</a>
+      <a href="#ablauf">So funktioniert's</a>
+      <a href="#branche">Für wen</a>
+    </div>
+    <div class="nav-actions">
+      <a class="btn btn-ghost" href="app/auth.html">Anmelden</a>
+      <a class="btn btn-primary" href="app/auth.html">Kostenlos starten</a>
+    </div>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <span class="eyebrow">🧩 Software- &amp; App-Entwicklung</span>
+    <h1>Projektplanung, Termine und <span class="accent">Kanban</span> — für jeden Kunden sein eigener Bereich.</h1>
+    <p class="sub">
+      CoSoft ist die geschützte Multiuser-Plattform für Entwicklungs-Teams: pro Kunde ein eigenes Kanban-Board
+      und eine eigene Terminplanung, intelligent miteinander verknüpft — und von jedem Gerät aus im Team nutzbar.
+    </p>
+    <div class="hero-ctas">
+      <a class="btn btn-primary" href="app/auth.html">Kostenlos starten</a>
+      <a class="btn btn-ghost" href="#funktionen">Funktionen ansehen</a>
+    </div>
+
+    <div class="mock" aria-hidden="true">
+      <div class="mock-bar"><span></span><span></span><span></span></div>
+      <div class="mock-body">
+        <div class="mock-side">
+          <div class="chip active"><i></i> Musterfirma GmbH</div>
+          <div class="chip"><i></i> Agentur Nord</div>
+          <div class="chip"><i></i> Bäckerei Sonne</div>
+        </div>
+        <div class="mock-main">
+          <div class="mock-cols">
+            <div class="mock-col">
+              <h4>Offen</h4>
+              <div class="mock-card">Onboarding-Call <small>📅 12.09.</small></div>
+              <div class="mock-card">Angebot erstellen</div>
+            </div>
+            <div class="mock-col">
+              <h4>In Arbeit</h4>
+              <div class="mock-card">Design-Review <small>🔗 verknüpft</small></div>
+            </div>
+            <div class="mock-col">
+              <h4>Erledigt</h4>
+              <div class="mock-card">Kickoff-Meeting</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="features" id="funktionen">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Funktionen</span>
+      <h2>Alles, was ein Projekt-Team pro Kunde braucht</h2>
+      <p>Kein Tab-Chaos, keine losen Excel-Listen — ein Bereich pro Kunde, sauber getrennt und trotzdem verbunden.</p>
+    </div>
+    <div class="grid">
+      <div class="feature-card">
+        <div class="icon">🗂️</div>
+        <h3>Projektplanung pro Kunde</h3>
+        <p>Jeder Kunde bekommt automatisch seinen eigenen, abgeschotteten Arbeitsbereich mit eigenem Board und Kalender.</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">📌</div>
+        <h3>Kanban-Board</h3>
+        <p>Aufgaben per Drag &amp; Drop durch Spalten wie Offen, In Arbeit, Review und Erledigt bewegen — in Echtzeit für alle sichtbar.</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">📅</div>
+        <h3>Terminplanung</h3>
+        <p>Kalenderansicht für Deadlines und Termine — Fälligkeitsdaten aus Aufgaben tauchen automatisch dort auf.</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">🔗</div>
+        <h3>Intelligent verknüpft</h3>
+        <p>Ein Fälligkeitsdatum an einer Karte erzeugt automatisch den passenden Termin — und umgekehrt: Termin verschieben, Deadline zieht mit.</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">🔒</div>
+        <h3>Geschützter Zugriff</h3>
+        <p>Login mit eigenem Konto, Zugriff nur auf zugewiesene Kunden. Kein offener Link, keine geteilte Tabelle.</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">📱</div>
+        <h3>Multiuser &amp; Multi-Device</h3>
+        <p>Team-Mitglieder pro Kunde einladen, von Laptop, Tablet oder Handy gleichzeitig arbeiten — alles synchron.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="steps" id="ablauf">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Ablauf</span>
+      <h2>In drei Schritten startklar</h2>
+    </div>
+    <div class="steps-grid">
+      <div class="step">
+        <div class="num">1</div>
+        <h3>Konto erstellen</h3>
+        <p>Registrieren, einloggen — dein Zugriff ist ab dem ersten Moment geschützt und geräteübergreifend.</p>
+      </div>
+      <div class="step">
+        <div class="num">2</div>
+        <h3>Kunden anlegen</h3>
+        <p>Für jeden Kunden mit einem Klick einen eigenen Bereich samt Standard-Kanban-Board erstellen.</p>
+      </div>
+      <div class="step">
+        <div class="num">3</div>
+        <h3>Team einladen &amp; loslegen</h3>
+        <p>Kolleg:innen pro Kunde einladen, Aufgaben anlegen, Termine setzen — alles bleibt automatisch verknüpft.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta" id="branche">
+  <div class="wrap">
+    <div class="cta-box">
+      <span class="badge-branch">🧩 Gebaut für Software- &amp; App-Entwicklung</span>
+      <h2 style="margin-top:16px;">Bereit, den Kunden-Chaos zu beenden?</h2>
+      <p>Leg jetzt deinen ersten Kunden an — Kanban und Terminplanung sind in wenigen Sekunden startklar.</p>
+      <a class="btn btn-primary" href="app/auth.html">Kostenlos starten</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="logo"><span class="dot"></span> CoSoft</div>
+        <p>Projektplanung, Terminplanung und Kanban-Board für Software- &amp; App-Entwicklungs-Teams — pro Kunde ein eigener, geschützter Bereich.</p>
+      </div>
+      <div class="footer-cols">
+        <div class="footer-col">
+          <h4>Produkt</h4>
+          <a href="#funktionen">Funktionen</a>
+          <a href="#ablauf">So funktioniert's</a>
+          <a href="app/auth.html">Anmelden</a>
+        </div>
+        <div class="footer-col">
+          <h4>Rechtliches</h4>
+          <a href="datenschutz.html">Datenschutz</a>
+          <a href="impressum.html">Impressum</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span id="year"></span> CoSoft</span>
+      <span>Branche: Software- &amp; App-Entwicklung</span>
+    </div>
+  </div>
+</footer>
+
+<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+</body>
+</html>

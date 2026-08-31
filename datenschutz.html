@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Datenschutzerklärung – CoSoft</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<style>
+  :root { --brand:#6d5efc; --ink:#1b1730; --ink-soft:#605c78; --border:#e6e3f5; --bg:#f8f7fd; }
+  body { margin:0; font-family:'Inter',system-ui,sans-serif; background:var(--bg); color:var(--ink); }
+  .wrap { max-width: 760px; margin: 0 auto; padding: 60px 24px 100px; }
+  a.back { color: var(--brand); text-decoration:none; font-weight:600; font-size:14px; }
+  h1 { margin: 20px 0 6px; }
+  h2 { font-size: 17px; margin-top: 36px; }
+  h3 { font-size: 15px; margin-top: 20px; }
+  .placeholder { background: #fff8e8; border: 1px dashed #e5c26b; border-radius: 10px; padding: 16px 18px; font-size: 14px; color: #7a5b12; margin: 22px 0 34px; }
+  p, li { color: var(--ink-soft); font-size: 14.5px; line-height: 1.7; }
+  .fill { background: #efecff; color:#4a3fb0; padding: 1px 6px; border-radius:4px; font-family: monospace; font-size: 13px; }
+  code { background:#efecff; padding:1px 5px; border-radius:4px; font-size: 13px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="back" href="index.html">← Zur Startseite</a>
+  <h1>Datenschutzerklärung</h1>
+
+  <div class="placeholder">
+    ⚠️ <strong>Vorlage, keine Rechtsberatung.</strong> Diese Seite beschreibt, welche Daten die CoSoft-Anwendung
+    technisch tatsächlich verarbeitet (Supabase-Backend für Auth/Datenbank). Verantwortliche Stelle, Kontaktdaten
+    und ggf. weitere Verarbeitungen (Analytics, Newsletter, Support-Tool …) musst du noch ergänzen. Vor Live-Betrieb
+    empfiehlt sich eine Prüfung durch eine:n Datenschutzbeauftragte:n bzw. Rechtsanwält:in, inkl. Abschluss eines
+    Auftragsverarbeitungsvertrags (AVV) mit Supabase und Wahl eines EU-Serverstandorts.
+  </div>
+
+  <h2>1. Verantwortlicher</h2>
+  <p>
+    <span class="fill">[Firmenname / Name]</span><br />
+    <span class="fill">[Anschrift]</span><br />
+    E-Mail: <span class="fill">[E-Mail-Adresse]</span>
+  </p>
+
+  <h2>2. Welche Daten wir verarbeiten</h2>
+  <h3>2.1 Kontodaten</h3>
+  <p>Bei der Registrierung: Name, E-Mail-Adresse, Passwort (verschlüsselt gespeichert durch den Auth-Dienst).</p>
+  <h3>2.2 Nutzungsdaten innerhalb der Anwendung</h3>
+  <p>
+    Von dir angelegte Kunden, Kanban-Karten (Titel, Beschreibung, Fälligkeitsdatum, Priorität, zugewiesene
+    E-Mail-Adresse) sowie Termine. Diese Daten sind ausschließlich für dich und die von dir eingeladenen
+    Mitglieder des jeweiligen Kunden sichtbar (technisch über Datenbankrichtlinien/Row Level Security erzwungen).
+  </p>
+  <h3>2.3 Technische Daten</h3>
+  <p>Beim Login-Vorgang verarbeitet der Authentifizierungsdienst technisch notwendige Metadaten (z. B. Zeitpunkt der Anmeldung, Session-Token).</p>
+
+  <h2>3. Zweck &amp; Rechtsgrundlage</h2>
+  <p>
+    Die Verarbeitung erfolgt zur Bereitstellung der Kernfunktionen (Projektplanung, Terminplanung, Kanban-Board)
+    gemäß Art. 6 Abs. 1 lit. b DSGVO (Vertragserfüllung bzw. vorvertragliche Maßnahmen).
+  </p>
+
+  <h2>4. Eingesetzte Dienste / Auftragsverarbeiter</h2>
+  <p>
+    Für Authentifizierung, Datenbank und Echtzeit-Synchronisation wird <strong>Supabase</strong> eingesetzt.
+    <span class="fill">[Serverstandort/Region gemäß Supabase-Projekteinstellung eintragen, z. B. EU-Central]</span>.
+    Mit Supabase ist ein Auftragsverarbeitungsvertrag abzuschließen; Details:
+    <a href="https://supabase.com/legal" target="_blank" rel="noopener">supabase.com/legal</a>.
+  </p>
+
+  <h2>5. Speicherdauer</h2>
+  <p>Daten werden gespeichert, solange dein Konto besteht. Nach Löschung des Kontos werden zugehörige Daten gemäß Datenbanklöschregeln entfernt.</p>
+
+  <h2>6. Deine Rechte</h2>
+  <p>
+    Du hast das Recht auf Auskunft, Berichtigung, Löschung, Einschränkung der Verarbeitung, Datenübertragbarkeit
+    sowie Widerspruch gegen die Verarbeitung deiner personenbezogenen Daten. Wende dich hierzu an die oben
+    genannte Kontaktadresse. Zudem besteht ein Beschwerderecht bei einer Datenschutzaufsichtsbehörde.
+  </p>
+
+  <h2>7. Cookies / lokale Speicherung</h2>
+  <p>
+    Die Anwendung verwendet technisch notwendige Session-Daten des Authentifizierungsdienstes im Browser
+    (z. B. <code>localStorage</code>), um dich eingeloggt zu halten. Es werden keine Marketing- oder
+    Tracking-Cookies eingesetzt. <span class="fill">[anpassen, falls du z. B. Analytics ergänzt]</span>.
+  </p>
+
+  <h2>8. Kontakt</h2>
+  <p>Bei Fragen zum Datenschutz wende dich an: <span class="fill">[Kontakt-E-Mail]</span></p>
+</div>
+</body>
+</html>

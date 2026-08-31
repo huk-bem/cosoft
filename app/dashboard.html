@@ -1,0 +1,190 @@
+<title>Dashboard – CoSoft</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" href="style.css" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+<div class="app-shell">
+  <aside class="sidebar">
+    <div class="logo"><span class="dot"></span> CoSoft</div>
+
+    <div>
+      <div class="sidebar-section-label">Kunden</div>
+      <ul class="customer-list" id="customer-list"></ul>
+    </div>
+
+    <button class="btn btn-ghost btn-sm" id="btn-new-customer" style="color:#efeaff;border-color:rgba(255,255,255,.18)">
+      + Neuer Kunde
+    </button>
+
+    <div class="user-box">
+      <span id="user-email">…</span>
+      <button class="btn btn-ghost btn-sm" id="btn-logout" style="color:#efeaff;border-color:rgba(255,255,255,.18)">Abmelden</button>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div id="empty-state" class="empty-state hidden">
+      <h2>Noch kein Kunde angelegt</h2>
+      <p>Lege links deinen ersten Kunden an – jeder Kunde bekommt automatisch ein eigenes Kanban-Board und eine eigene Terminplanung.</p>
+      <button class="btn btn-primary" id="btn-empty-new-customer">+ Ersten Kunden anlegen</button>
+    </div>
+
+    <div id="workspace" class="hidden">
+      <div class="topbar">
+        <h1><span id="customer-swatch" class="badge" style="width:12px;height:12px;padding:0;border-radius:4px;"></span> <span id="customer-name">Kunde</span></h1>
+        <div class="actions">
+          <button class="btn btn-ghost" id="btn-invite">👥 Mitglied einladen</button>
+        </div>
+      </div>
+
+      <div class="board" id="board"></div>
+
+      <div class="calendar-head">
+        <h2 id="calendar-title">Terminplanung</h2>
+        <div class="calendar-nav">
+          <button class="btn btn-ghost btn-sm" id="cal-prev">‹</button>
+          <button class="btn btn-ghost btn-sm" id="cal-today">Heute</button>
+          <button class="btn btn-ghost btn-sm" id="cal-next">›</button>
+        </div>
+      </div>
+      <div class="calendar-grid" id="calendar-grid"></div>
+    </div>
+  </main>
+</div>
+
+<!-- Modal: Neuer Kunde -->
+<div class="modal-backdrop hidden" id="modal-customer">
+  <div class="modal">
+    <h3>Neuer Kunde</h3>
+    <form id="form-customer">
+      <div class="field">
+        <label for="customer-name-input">Name</label>
+        <input id="customer-name-input" required placeholder="z. B. Musterfirma GmbH" />
+      </div>
+      <div class="field">
+        <label for="customer-color-input">Farbe</label>
+        <input id="customer-color-input" type="color" value="#6d5efc" style="height:42px;padding:4px;" />
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-ghost" data-close>Abbrechen</button>
+        <button type="submit" class="btn btn-primary">Anlegen</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Modal: Mitglied einladen -->
+<div class="modal-backdrop hidden" id="modal-invite">
+  <div class="modal">
+    <h3>Mitglied einladen</h3>
+    <p style="font-size:13px;color:var(--ink-soft);margin-top:-8px;">
+      Die Person muss bereits ein CoSoft-Konto haben. Sie erhält vollen Zugriff auf diesen Kunden – Board, Termine, alle Geräte.
+    </p>
+    <form id="form-invite">
+      <div class="field">
+        <label for="invite-email">E-Mail-Adresse</label>
+        <input id="invite-email" type="email" required />
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-ghost" data-close>Abbrechen</button>
+        <button type="submit" class="btn btn-primary">Einladen</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Modal: Aufgabe -->
+<div class="modal-backdrop hidden" id="modal-task">
+  <div class="modal">
+    <h3 id="task-modal-title">Neue Aufgabe</h3>
+    <form id="form-task">
+      <input type="hidden" id="task-id" />
+      <div class="field">
+        <label for="task-title">Titel</label>
+        <input id="task-title" required />
+      </div>
+      <div class="field">
+        <label for="task-desc">Beschreibung</label>
+        <textarea id="task-desc" rows="3"></textarea>
+      </div>
+      <div class="field">
+        <label for="task-column">Status</label>
+        <select id="task-column"></select>
+      </div>
+      <div style="display:flex;gap:12px;">
+        <div class="field" style="flex:1;">
+          <label for="task-due">Fälligkeitsdatum</label>
+          <input id="task-due" type="date" />
+        </div>
+        <div class="field" style="flex:1;">
+          <label for="task-priority">Priorität</label>
+          <select id="task-priority">
+            <option value="niedrig">Niedrig</option>
+            <option value="normal" selected>Normal</option>
+            <option value="hoch">Hoch</option>
+          </select>
+        </div>
+      </div>
+      <div class="field">
+        <label for="task-assignee">Zugewiesen an (E-Mail, optional)</label>
+        <input id="task-assignee" type="email" />
+      </div>
+      <p id="task-link-hint" class="hidden" style="font-size:12px;color:var(--ink-soft);">
+        🔗 Diese Aufgabe ist automatisch mit einem Termin in der Terminplanung verknüpft.
+      </p>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-danger hidden" id="btn-delete-task">Löschen</button>
+        <div class="right">
+          <button type="button" class="btn btn-ghost" data-close>Abbrechen</button>
+          <button type="submit" class="btn btn-primary">Speichern</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Modal: Tag-Übersicht / neuer Termin -->
+<div class="modal-backdrop hidden" id="modal-day">
+  <div class="modal">
+    <h3 id="day-modal-title">Termine</h3>
+    <div id="day-events-list" style="display:flex;flex-direction:column;gap:8px;margin-bottom:16px;"></div>
+    <div style="display:flex;gap:8px;">
+      <button class="btn btn-ghost btn-sm" id="day-add-task">+ Aufgabe mit Fälligkeitsdatum</button>
+      <button class="btn btn-ghost btn-sm" id="day-add-event">+ Nur Termin</button>
+    </div>
+    <div class="modal-actions">
+      <button type="button" class="btn btn-ghost" data-close>Schließen</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: einfacher Termin (ohne Kanban-Karte) -->
+<div class="modal-backdrop hidden" id="modal-event">
+  <div class="modal">
+    <h3>Neuer Termin</h3>
+    <form id="form-event">
+      <div class="field">
+        <label for="event-title">Titel</label>
+        <input id="event-title" required />
+      </div>
+      <div class="field">
+        <label for="event-notes">Notiz</label>
+        <textarea id="event-notes" rows="2"></textarea>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-danger hidden" id="btn-delete-event">Löschen</button>
+        <div class="right">
+          <button type="button" class="btn btn-ghost" data-close>Abbrechen</button>
+          <button type="submit" class="btn btn-primary">Speichern</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script src="config.js"></script>
+<script src="supabase-client.js"></script>
+<script src="app.js"></script>

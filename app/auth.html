@@ -1,0 +1,117 @@
+<title>Anmelden – CoSoft</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" href="style.css" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+<div class="auth-wrap">
+  <div class="auth-card">
+    <div class="auth-logo"><span class="dot"></span> CoSoft</div>
+
+    <div class="auth-tabs">
+      <button id="tab-login" class="active" type="button">Anmelden</button>
+      <button id="tab-register" type="button">Registrieren</button>
+    </div>
+
+    <form id="form-login">
+      <div class="field">
+        <label for="login-email">E-Mail</label>
+        <input id="login-email" type="email" required autocomplete="email" />
+      </div>
+      <div class="field">
+        <label for="login-password">Passwort</label>
+        <input id="login-password" type="password" required autocomplete="current-password" />
+      </div>
+      <button class="btn btn-primary btn-block" type="submit">Anmelden</button>
+    </form>
+
+    <form id="form-register" class="hidden">
+      <div class="field">
+        <label for="reg-name">Name</label>
+        <input id="reg-name" type="text" required autocomplete="name" />
+      </div>
+      <div class="field">
+        <label for="reg-email">E-Mail</label>
+        <input id="reg-email" type="email" required autocomplete="email" />
+      </div>
+      <div class="field">
+        <label for="reg-password">Passwort</label>
+        <input id="reg-password" type="password" required minlength="6" autocomplete="new-password" />
+      </div>
+      <button class="btn btn-primary btn-block" type="submit">Konto erstellen</button>
+    </form>
+
+    <div id="msg" class="auth-msg hidden"></div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script src="config.js"></script>
+<script src="supabase-client.js"></script>
+<script>
+  const tabLogin = document.getElementById('tab-login');
+  const tabRegister = document.getElementById('tab-register');
+  const formLogin = document.getElementById('form-login');
+  const formRegister = document.getElementById('form-register');
+  const msg = document.getElementById('msg');
+
+  function showTab(which) {
+    const isLogin = which === 'login';
+    tabLogin.classList.toggle('active', isLogin);
+    tabRegister.classList.toggle('active', !isLogin);
+    formLogin.classList.toggle('hidden', !isLogin);
+    formRegister.classList.toggle('hidden', isLogin);
+    msg.classList.add('hidden');
+  }
+  tabLogin.addEventListener('click', () => showTab('login'));
+  tabRegister.addEventListener('click', () => showTab('register'));
+
+  function showMsg(text, kind) {
+    msg.textContent = text;
+    msg.className = 'auth-msg ' + kind;
+  }
+
+  formLogin.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (!supabaseClient) return;
+    const email = document.getElementById('login-email').value.trim();
+    const password = document.getElementById('login-password').value;
+    const { error } = await supabaseClient.auth.signInWithPassword({ email, password });
+    if (error) {
+      showMsg(error.message, 'error');
+    } else {
+      window.location.href = 'dashboard.html';
+    }
+  });
+
+  formRegister.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (!supabaseClient) return;
+    const full_name = document.getElementById('reg-name').value.trim();
+    const email = document.getElementById('reg-email').value.trim();
+    const password = document.getElementById('reg-password').value;
+    const { data, error } = await supabaseClient.auth.signUp({
+      email,
+      password,
+      options: { data: { full_name } },
+    });
+    if (error) {
+      showMsg(error.message, 'error');
+      return;
+    }
+    if (data.session) {
+      window.location.href = 'dashboard.html';
+    } else {
+      showMsg('Konto erstellt! Bitte bestätige deine E-Mail-Adresse und melde dich anschließend an.', 'ok');
+      showTab('login');
+    }
+  });
+
+  // Bereits eingeloggt? Direkt weiter zum Dashboard.
+  (async () => {
+    if (!supabaseClient) return;
+    const { data } = await supabaseClient.auth.getSession();
+    if (data.session) window.location.href = 'dashboard.html';
+  })();
+</script>
