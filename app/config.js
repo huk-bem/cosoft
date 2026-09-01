@@ -11,6 +11,6 @@
 // ============================================================================
 
 window.COSOFT_CONFIG = {
-  SUPABASE_URL: 'https://DEIN-PROJEKT.supabase.co',
+  SUPABASE_URL: 'https://vmjivwfieyfnlcejkktu.supabase.co',
   SUPABASE_ANON_KEY: 'DEIN-ANON-KEY',
 };
