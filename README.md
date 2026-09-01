@@ -23,6 +23,12 @@ Keine Build-Schritte, kein Framework — reines HTML/CSS/JS, das direkt gegen ei
 
 ## 1. Supabase-Projekt einrichten (einmalig)
 
+> **Status: für dieses Projekt bereits erledigt.** Angebunden ist das Supabase-Projekt
+> `vmjivwfieyfnlcejkktu` (Region eu-central-1 / Frankfurt); das Schema aus
+> `supabase/schema.sql` ist eingespielt und die Zugangsdaten stehen in `app/config.js`.
+> Die folgenden Schritte sind nur nötig, wenn du ein *weiteres* Projekt aufsetzt.
+
+
 1. Kostenloses Konto auf [supabase.com](https://supabase.com) anlegen, neues Projekt erstellen
    (Region z. B. **EU Central (Frankfurt)** wählen, relevant für Datenschutz/DSGVO).
 2. Im Projekt zu **SQL Editor → New query** gehen, den kompletten Inhalt von

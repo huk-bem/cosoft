@@ -12,5 +12,5 @@
 
 window.COSOFT_CONFIG = {
   SUPABASE_URL: 'https://vmjivwfieyfnlcejkktu.supabase.co',
-  SUPABASE_ANON_KEY: 'DEIN-ANON-KEY',
+  SUPABASE_ANON_KEY: 'sb_publishable_i35To_pJC-7evKXrk4Oqhw_m14vwlOf',
 };

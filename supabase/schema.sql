@@ -327,7 +327,10 @@ create trigger on_event_change_sync_task
 
 -- updated_at automatisch pflegen
 create or replace function public.touch_updated_at()
-returns trigger language plpgsql as $$
+returns trigger
+language plpgsql
+set search_path = public
+as $$
 begin
   new.updated_at = now();
   return new;
@@ -343,7 +346,30 @@ create trigger touch_events before update on public.events
   for each row execute function public.touch_updated_at();
 
 -- ----------------------------------------------------------------------------
--- 6. Realtime aktivieren (für Multi-Device-Sync in Echtzeit)
+-- 6. Rechte härten
+-- ----------------------------------------------------------------------------
+-- Ohne das sind alle Funktionen oben automatisch als REST-Endpunkt aufrufbar
+-- (/rest/v1/rpc/<name>), weil Postgres neuen Funktionen EXECUTE an PUBLIC gibt.
+-- Die reinen Trigger-Funktionen sind keine API und werden komplett gesperrt --
+-- Trigger feuern weiterhin, da Postgres das EXECUTE-Recht nur beim Anlegen des
+-- Triggers prüft, nicht bei jedem Auslösen.
+revoke all on function public.handle_new_user()      from public, anon, authenticated;
+revoke all on function public.handle_new_customer()  from public, anon, authenticated;
+revoke all on function public.sync_task_to_event()   from public, anon, authenticated;
+revoke all on function public.sync_event_to_task()   from public, anon, authenticated;
+revoke all on function public.touch_updated_at()     from public, anon, authenticated;
+
+-- is_customer_member wird in den RLS-Policies ausgewertet und muss deshalb für
+-- eingeloggte Nutzer aufrufbar bleiben; anonym braucht sie niemand.
+revoke all on function public.is_customer_member(uuid) from public, anon, authenticated;
+grant execute on function public.is_customer_member(uuid) to authenticated;
+
+-- Einladen ist ein bewusster RPC-Aufruf der App (mit Besitzer-Prüfung darin).
+revoke all on function public.invite_member_by_email(uuid, text) from public, anon, authenticated;
+grant execute on function public.invite_member_by_email(uuid, text) to authenticated;
+
+-- ----------------------------------------------------------------------------
+-- 7. Realtime aktivieren (für Multi-Device-Sync in Echtzeit)
 -- ----------------------------------------------------------------------------
 alter publication supabase_realtime add table public.customers;
 alter publication supabase_realtime add table public.customer_members;
