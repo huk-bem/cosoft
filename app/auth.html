@@ -95,7 +95,14 @@
     const { data, error } = await supabaseClient.auth.signUp({
       email,
       password,
-      options: { data: { full_name } },
+      options: {
+        data: { full_name },
+        // Ohne diese Angabe schickt Supabase den Bestaetigungslink auf die
+        // "Site URL" des Projekts (Standard: http://localhost:3000) - dort
+        // laeuft nichts. So zeigt der Link immer auf das Dashboard der
+        // Umgebung, aus der heraus registriert wurde (lokal wie live).
+        emailRedirectTo: new URL('dashboard.html', window.location.href).href,
+      },
     });
     if (error) {
       showMsg(error.message, 'error');
